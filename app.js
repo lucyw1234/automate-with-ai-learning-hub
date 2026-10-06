@@ -142,3 +142,19 @@ document.querySelector("#progressPercent").textContent=pct+"%";
 document.querySelector("#projectsCount").textContent=built+"/6 projects built";
 }
 renderProgress();
+function track(name,data={}){
+  try{
+    if(typeof window.va==="function") window.va("event",{name,...data});
+    else{
+      window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+      window.va("event",{name,...data});
+    }
+  }catch(e){}
+}
+grid.addEventListener("click",e=>{const c=e.target.closest(".module-card");if(c)track("module_opened",{stage:modules[+c.dataset.module].n,title:modules[+c.dataset.module].title})});
+document.querySelector("#projectGrid").addEventListener("click",e=>{const b=e.target.closest("[data-project-check]");if(b)track("project_toggled",{project:projects[+b.dataset.projectCheck].title})});
+modal.addEventListener("click",e=>{const b=e.target.closest("[data-complete]");if(b)track("stage_completion_toggled",{stage:modules[+b.dataset.complete].n,title:modules[+b.dataset.complete].title})});
+document.querySelectorAll('[data-track="training_cta"]').forEach(el=>el.addEventListener("click",()=>track("training_cta_clicked",{location:"bottom_cta"})));
+document.querySelector("#resourceGrid").addEventListener("click",e=>{const link=e.target.closest("a");if(link)track("resource_clicked",{resource:link.closest(".resource")?.querySelector("h3")?.textContent||"unknown"})});
+document.querySelector("#resourceFilters").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(b)track("resource_filter_used",{category:b.dataset.filter})});
+document.querySelectorAll('a[href="#roadmap"]').forEach(el=>el.addEventListener("click",()=>track("roadmap_started",{source:el.className||"link"})));
