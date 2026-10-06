@@ -24,3 +24,14 @@ function saveProgress(){localStorage.setItem(progressKey,JSON.stringify(progress
 function renderCards(){document.querySelectorAll(".module-card").forEach((c,i)=>{const done=progress.modules.includes(i);c.classList.toggle("is-complete",done);const s=c.querySelector(".module-status");if(s)s.textContent=done?"✓ Completed":"Open mini module"});}
 function renderProgress(){const done=progress.modules.length;const pct=Math.round(done/modules.length*100);const built=progress.projects.length;const bar=document.querySelector("#progressBarFill");if(bar)bar.style.width=pct+"%";const count=document.querySelector("#progressCount");if(count)count.textContent=done+"/10 stages completed";const percent=document.querySelector("#progressPercent");if(percent)percent.textContent=pct+"%";const projectsCount=document.querySelector("#projectsCount");if(projectsCount)projectsCount.textContent=built+"/6 projects built";}
 renderProgress();
+const toolbox=[
+["WORKFLOW AUTOMATION","n8n • Make • Zapier • Code","Predictable multi-step processes, integrations and business rules."],
+["AGENT PLATFORMS","Grok Bot • OpenAI agent experiences • emerging agent platforms","Goal-driven work, browser/computer use, tools, context and flexible multi-step tasks."],
+["CODING AGENTS","Codex • Claude Code • Cursor-style tools","Understand, create, debug and modify software with AI assistance."],
+["MODELS","OpenAI • Claude • Gemini • Grok • Qwen","Reasoning, extraction, classification, generation and tool calling. Choose by task."],
+["DATA & KNOWLEDGE","Supabase • SQL • Vector stores • Drive","Store business state, customer data and knowledge that AI systems need."],
+["COMMUNICATION","WhatsApp • Email • Telegram • Slack","Where customers and teams interact with your systems."],
+["INFRASTRUCTURE","Cloud platforms • Vercel • Railway • VPS","Keep systems online, secure and available beyond your laptop."],
+["HUMANS","Approvals • Exceptions • Escalations","Not everything should be autonomous. Good systems know when to involve a person."]
+];
+document.querySelector("#toolboxGrid").innerHTML=toolbox.map(t=>`<article class="tool-card"><span class="kicker">${t[0]}</span><h3>${t[1]}</h3><p>${t[2]}</p></article>`).join("");
